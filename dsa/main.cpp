@@ -82,13 +82,39 @@ int isPalindromicArray(int arr[], int n) {
     return 1;
 }
 
+/*
+ int main() {
+     int arr[] = {111, 222, 333, 444, 555};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     isPalindromicArray(arr, size);
+ }
 
+ */
+//MARK: Cyclically rotate an array by one
+
+
+void Display(int arr[] , int n) {
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+}
+
+void roate(int arr[], int n) {
+    int last = arr[n - 1];
+    for(int i = n; i > 0; i--) {
+        arr[i] = arr[i - 1];
+    }
+    arr[0] = last;
+    
+}
 int main() {
-    int arr[] = {111, 222, 333, 444, 555};
+    int arr[] = {1, 2, 3, 4, 5};
     int size = sizeof(arr) / sizeof(arr[0]);
-    isPalindromicArray(arr, size);
+    roate(arr, size);
+    Display(arr, size);
 }
 
 
 
+//MARK: First and last occurrences of x
 
