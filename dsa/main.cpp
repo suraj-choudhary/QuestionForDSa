@@ -107,14 +107,56 @@ void roate(int arr[], int n) {
     arr[0] = last;
     
 }
-int main() {
-    int arr[] = {1, 2, 3, 4, 5};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    roate(arr, size);
-    Display(arr, size);
+
+/*
+ int main() {
+     int arr[] = {1, 2, 3, 4, 5};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     roate(arr, size);
+     Display(arr, size);
+ }
+ */
+
+
+//MARK: First and last occurrences of x(method 1)
+
+vector<int> find(int arr[], int n, int x) {
+    int first = -1;
+    int last = -1;
+    for(int i = 0; i < n; i++) {
+        
+        if(x != arr[i]) {
+            continue;
+        }
+        if(first == -1) {
+            first = i;
+        }
+        last = i;
+    }
+    return {first, last};
 }
 
+//MARK: First and last occurrences of x(using Binary search):
 
+vector<int>findM(int arr[], int n, int x) {
+    
+    int left = 0;
+    int right = n - 1;
+    
+    while (left < right) {
+        int mid = left + right / 2;
+        
+        if(arr[mid] >= x) {
+            
+        }
+    }
+    
+    return {};
+}
 
-//MARK: First and last occurrences of x
+int main() {
+    int arr[] = {1, 3, 5, 5, 5, 5, 67, 123, 125};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    find(arr, size, 5);
+}
 
