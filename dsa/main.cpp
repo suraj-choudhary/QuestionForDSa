@@ -28,11 +28,11 @@ vector<int> valueEqualToIndex(int arr[], int size) {
 
 /*
  int main() {
-     int arr[] = {15, 2, 45, 12, 7};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     valueEqualToIndex(arr, size);
+ int arr[] = {15, 2, 45, 12, 7};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ valueEqualToIndex(arr, size);
  }
-
+ 
  */
 
 
@@ -58,11 +58,11 @@ int PalinArray(int a[], int n) {
 //MARK: Method 2 for Palindromic array:
 
 bool isPalindromic(int n) {
-   
+    
     string str = to_string(n);
     
     long len = str.size();
-
+    
     for(int i = 0; i < len / 2; i++) {
         if (str[i] != str[len - 1 - i]) {
             return false;
@@ -72,7 +72,7 @@ bool isPalindromic(int n) {
 }
 
 int isPalindromicArray(int arr[], int n) {
-
+    
     for(int i = 0; i < n; i++) {
         bool ans = isPalindromic(arr[i]);
         if(ans == false ) {
@@ -84,11 +84,11 @@ int isPalindromicArray(int arr[], int n) {
 
 /*
  int main() {
-     int arr[] = {111, 222, 333, 444, 555};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     isPalindromicArray(arr, size);
+ int arr[] = {111, 222, 333, 444, 555};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ isPalindromicArray(arr, size);
  }
-
+ 
  */
 //MARK: Cyclically rotate an array by one
 
@@ -110,10 +110,10 @@ void roate(int arr[], int n) {
 
 /*
  int main() {
-     int arr[] = {1, 2, 3, 4, 5};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     roate(arr, size);
-     Display(arr, size);
+ int arr[] = {1, 2, 3, 4, 5};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ roate(arr, size);
+ Display(arr, size);
  }
  */
 
@@ -137,26 +137,115 @@ vector<int> find(int arr[], int n, int x) {
 }
 
 //MARK: First and last occurrences of x(using Binary search):
-
-vector<int>findM(int arr[], int n, int x) {
+vector<int>findM(int arr[], int n, int target, bool findStartElement) {
     
-    int left = 0;
-    int right = n - 1;
-    
-    while (left < right) {
-        int mid = left + right / 2;
-        
-        if(arr[mid] >= x) {
-            
+    int ans = -1;
+    int start = 0;
+    int end = n - 1;
+    while (start <= end) {
+        int mid = start + (end - start) / 2;
+        if(target < arr[mid]) {
+            end = mid -1;
+        } else if(target > arr[mid]) {
+            start = mid + 1;
+        } else {
+            ans = mid;
+            if(findStartElement) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
         }
     }
-    
-    return {};
+    return {ans};
 }
+
+/*
+ int main() {
+     int arr[] = {1, 3, 5, 5, 5, 5, 67, 123, 125};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     findM(arr, size, 5, true);
+     
+ }
+
+ */
+
+
+int Maximize(int a[], int n) {
+    
+    for(int i = 0; i < n - 1; i++) {
+        if(a[i] > a[i + 1]) {
+            int temp = a[i];
+            a[i] = a[i + 1];
+            a[i + 1] = temp;
+            i = - 1;
+        }
+    }
+    int sum = -1;
+        for(int i = 0; i < n - 1; i++) {
+            printf("%d", a[i]);
+            sum = sum + a[i];
+    }
+    printf("%d", sum);
+    return 0;
+}
+
+/*
+ int main() {
+     int arr[] = {5, 3, 2, 4, 1};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     Maximize(arr, size);
+     
+ }
+ */
+
+
+//MARK: Stack Tutorial:
+struct Stack {
+    int size;
+    int top;
+    int *S;
+};
+void Create(struct Stack *st) {
+    printf("Enter size:");
+    scanf("%d", &st->size);
+    st->top = -1;
+    st->S = (int *)malloc(st->size*sizeof(int));
+}
+
+void DisplayStack(struct Stack st) {
+    int i;
+    for(i = st.top; i >= 0; i--) {
+        printf("%d ", st.S[i]);
+    }
+}
+
+void Push(struct Stack *st, int x) {
+    if(st->top == st->size - 1) {
+        printf("Stack Overflow\n");
+    } else {
+        st->top++;
+        st->S[st->top] = x;
+    }
+}
+
+int pop(struct Stack *st) {
+    int x = -1;
+    if(st->top == -1) {
+        printf("Stack UnderFlow");
+    } else {
+        x = st->S[st->top--];
+    }
+    return x;
+}
+
 
 int main() {
-    int arr[] = {1, 3, 5, 5, 5, 5, 67, 123, 125};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    find(arr, size, 5);
+    struct Stack st;
+    Create(&st);
+    Push(&st, 10);
+    Push(&st, 20);
+    Push(&st, 30);
+    DisplayStack(st);
+    
 }
-
