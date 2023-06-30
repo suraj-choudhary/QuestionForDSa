@@ -138,7 +138,6 @@ vector<int> find(int arr[], int n, int x) {
 
 //MARK: First and last occurrences of x(using Binary search):
 vector<int>findM(int arr[], int n, int target, bool findStartElement) {
-    
     int ans = -1;
     int start = 0;
     int end = n - 1;
@@ -162,17 +161,16 @@ vector<int>findM(int arr[], int n, int target, bool findStartElement) {
 
 /*
  int main() {
-     int arr[] = {1, 3, 5, 5, 5, 5, 67, 123, 125};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     findM(arr, size, 5, true);
-     
+ int arr[] = {1, 3, 5, 5, 5, 5, 67, 123, 125};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ findM(arr, size, 5, true);
+ 
  }
-
+ 
  */
 
 
 int Maximize(int a[], int n) {
-    
     for(int i = 0; i < n - 1; i++) {
         if(a[i] > a[i + 1]) {
             int temp = a[i];
@@ -182,9 +180,9 @@ int Maximize(int a[], int n) {
         }
     }
     int sum = -1;
-        for(int i = 0; i < n - 1; i++) {
-            printf("%d", a[i]);
-            sum = sum + a[i];
+    for(int i = 0; i < n - 1; i++) {
+        printf("%d", a[i]);
+        sum = sum + a[i];
     }
     printf("%d", sum);
     return 0;
@@ -192,15 +190,14 @@ int Maximize(int a[], int n) {
 
 /*
  int main() {
-     int arr[] = {5, 3, 2, 4, 1};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     Maximize(arr, size);
-     
+ int arr[] = {5, 3, 2, 4, 1};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ Maximize(arr, size);
+ 
  }
  */
 
-
-//MARK: Stack Tutorial:
+//MARK: Stack Tutorial using array
 struct Stack {
     int size;
     int top;
@@ -218,6 +215,7 @@ void DisplayStack(struct Stack st) {
     for(i = st.top; i >= 0; i--) {
         printf("%d ", st.S[i]);
     }
+    printf("\n");
 }
 
 void Push(struct Stack *st, int x) {
@@ -228,7 +226,6 @@ void Push(struct Stack *st, int x) {
         st->S[st->top] = x;
     }
 }
-
 int pop(struct Stack *st) {
     int x = -1;
     if(st->top == -1) {
@@ -239,13 +236,144 @@ int pop(struct Stack *st) {
     return x;
 }
 
+int peek(struct Stack st, int index) {
+    int x = -1;
+    if(st.top - index + 1 < 0) {
+        printf("Invalid Index");
+    } else {
+        x = st.S[st.top - index + 1];
+    }
+    return x;
+    
+}
+int isEmpty(struct Stack st) {
+    if(st.top == -1) {
+        return 1;
+    }
+    return 0;
+    
+}
+int isFull(struct Stack st) {
+    return st.top == st.size - 1;
+}
+
+int stackTop(struct Stack st) {
+    if(!isEmpty(st)) {
+        return st.S[st.top];
+    }
+    return -1;
+}
+/*
+ int main() {
+ struct Stack st;
+ Create(&st);
+ Push(&st, 10);
+ Push(&st, 20);
+ Push(&st, 30);
+ DisplayStack(st);
+ printf("%d\n", pop(&st));
+ }
+ 
+ */
+
+
+//MARK: Swap and Miximize
+void Swapping(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+//MARK: Sort an array of 0s, 1s and 2s
+
+void sort012(int arr[], int n) {
+    int countZero = 0;
+    int countOne = 0;
+    int countTwo = 0;
+    
+    for(int i = 0; i < n; i++) {
+        if(arr[i] == 0) {
+            countZero += 1;
+        }
+        if(arr[i] == 1) {
+            countOne += 1;
+        }
+        if(arr[i] == 2) {
+            countTwo += 1;
+        }
+    }
+    int i = 0;
+    while (countZero != 0) {
+        arr[i] = 0;
+        i = i + 1;
+        countZero = countZero - 1;
+    }
+    
+    while (countOne != 0) {
+        arr[i] = 1;
+        i = i + 1;
+        countOne = countOne - 1;
+    }
+    while (countTwo != 0) {
+        arr[i] = 2;
+        i = i + 1;
+        countTwo = countTwo - 1;
+    }
+    Display(arr, n);
+}
+
+//MARK: Method 2:
+void sort012Method2(int arr[], int n) {
+    int low = 0;
+    int mid = 0;
+    int high = n - 1;
+    while (low < high) {
+        if(arr[mid] == 0) {
+            Swapping(&arr[low], &arr[mid]);
+            low++;
+            mid++;
+        } else if (arr[mid] == 1) {
+            mid++;
+        } else {
+            Swapping(&arr[mid], &arr[high]);
+            high = high - 1;
+        }
+    }
+    
+    Display(arr, n);
+    
+}
+
+/*
+ int main() {
+     int arr[] = {0, 2, 1, 2, 0};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     sort012Method2(arr, size);
+ }
+
+ */
+
+
+//MARK: Count pairs with given sum
+
+int getPairsCount(int arr[], int n, int k) {
+    int count = 0;
+    for(int i = 0; i < n; i++) {
+        
+        for(int j = i + 1; j < n; j++) {
+            
+            if(arr[i] + arr[j] == k) {
+                count++;
+            }
+        }
+    }
+    printf("%d ", count);
+    return 0;
+}
 
 int main() {
-    struct Stack st;
-    Create(&st);
-    Push(&st, 10);
-    Push(&st, 20);
-    Push(&st, 30);
-    DisplayStack(st);
-    
+    int arr[] = {1, 5, 7, 1};
+    int size = sizeof(arr) / sizeof(arr[0]);
+    int k = 6;
+    getPairsCount(arr, size, k);
 }
