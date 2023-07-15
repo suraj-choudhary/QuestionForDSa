@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include <stack>
+#include <set>
 
 //MARK: Started solving love bubber sheet
 using namespace std;
@@ -346,11 +348,11 @@ void sort012Method2(int arr[], int n) {
 
 /*
  int main() {
-     int arr[] = {0, 2, 1, 2, 0};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     sort012Method2(arr, size);
+ int arr[] = {0, 2, 1, 2, 0};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ sort012Method2(arr, size);
  }
-
+ 
  */
 
 
@@ -371,9 +373,190 @@ int getPairsCount(int arr[], int n, int k) {
     return 0;
 }
 
+
+//MARK: Parenthesis Checker(string)
+
+bool areBracketsBalanced(string expr) {
+    
+    stack<char> temp;
+    
+    for(int i = 0; i < expr.length(); i++) {
+        
+        if (temp.empty()) {
+            temp.push(expr[i]);
+        } else if((temp.top() == '(' && expr[i] == ')')
+                  || (temp.top() == '{' && expr[i] == '}')
+                  || (temp.top() == '[' && expr[i] == ']')) {
+            temp.pop();
+        } else {
+            temp.push(expr[i]);
+        }
+    }
+    
+    if (temp.empty()) {
+        return true;
+    }
+    return false;
+}
+
+
+//MARK: Check for Balanced Bracket expression without using stack :
+
+bool areBracketsBalanced2(string str) {
+    int count = -1;
+    for(int i = 0; i < str.size(); i++) {
+        
+        if(str[i] == '(' || str[i] == '{' || str[i] == '[') {
+            str[count++] = str[i];
+        } else {
+            if(i>=0 && ((str[i]=='(' && str[i]==')') || (str[i]=='{' && str[i] =='}') || (str[i]=='[' && str[i]==']'))) {
+                
+                count--;
+            } else {
+                return false;
+            }
+
+        }
+    }
+    return -1;
+}
+
+/*
+ int main() {
+     string str = "{([])}";
+     areBracketsBalanced2(str);
+ }
+
+ */
+
+
+//MARK: Binary Search(Iterative approach)
+int binarysearch(int arr[], int n, int k) {
+    int low = 0;
+    int high = n - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if(arr[mid] == k) {
+            printf("%d ", mid);
+            break;
+        } else if(arr[mid] > k) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+    
+    return 0;
+}
+//MARK: Binary Search(Recusrive approach)
+
+int RecBinarySearch(int arr[], int start, int end , int key) {
+    if(end >= start) {
+        int mid = start + (end - start) / 2;
+        if(arr[mid] == key) {
+            return mid;
+        } else if(arr[mid] > key) {
+            RecBinarySearch(arr, start, mid - 1, key);
+        } else {
+            RecBinarySearch(arr, mid + 1, end, key);
+        }
+    }
+    return -1;
+}
+
+/*
+ int main() {
+     int arr[] = {2, 3, 4, 10, 40};
+     int size = sizeof(arr) / sizeof(arr[0]);
+     int key = 10;
+     int result = RecBinarySearch(arr, 0, size - 1, key);
+     printf("%d ", result);
+ }
+ */
+
+//MARK: Union of two arrays, but this is not handling the duplicate element of adjecent
+int doUnion(int a[], int n, int b[], int m)  {
+    int i = 0;
+    int j = 0;
+    int count = 0;
+    while (i < n && j < m) {
+        if(a[i] < b[j]) {
+            cout<<a[i++] << " ";
+            count++;
+        } else if(b[j] < a[i]) {
+            count++;
+            cout<<b[j++] << " ";
+        } else {
+            cout<<a[i++];
+            count++;
+            j++;
+        }
+    }
+    while (i < n) {
+        cout<<a[i++] << " ";
+        count++;
+    }
+    while (j < m) {
+        cout<<b[j++] << " ";
+        count++;
+    }
+    printf("%d ", count);
+    return 0;
+}
+
+vector<int> Unionarray(int arr1[], int arr2[], int n, int m) {
+    set<int> res;
+
+    for(int i = 0; i < n; i++) {
+        res.insert(arr1[i]);
+    }
+    for(int j = 0; j < m; j++) {
+        res.insert(arr2[j]);
+    }
+    vector<int> vec(res.begin(), res.end());
+    return vec;
+}
+
+
+vector<int> uniounOfArray(int arr1[], int arr2[], int m, int n) {
+    
+    vector<int>v;
+    
+    return v;
+}
+
+/*
+ int main() {
+     int a[] = {1, 2, 3, 4, 5};
+     int b[] = {1, 2, 3};
+     int m = sizeof(a) / sizeof(a[0]);
+     int n = sizeof(b) / sizeof(b[0]);
+     vector<int> uni = Unionarray(a, b, m, n);
+     for(int i: uni) {
+         cout<< i << " ";
+     }
+     
+ }
+ */
+
+
+//MARK: Reverse array in groups
+
+void reveseInGroup(int arr[], int n, int k) {
+    
+    for(int i = 0; i < n; i++) {
+        
+        if(i < k) {
+            
+        }
+    }
+    
+}
+
 int main() {
-    int arr[] = {1, 5, 7, 1};
+    int arr[] = {1,2,3,4,5};
     int size = sizeof(arr) / sizeof(arr[0]);
-    int k = 6;
-    getPairsCount(arr, size, k);
+    int k = 3;
+    reveseInGroup(arr, size, k);
 }
