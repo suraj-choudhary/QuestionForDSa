@@ -10,6 +10,7 @@
 #include <string>
 #include <stack>
 #include <set>
+#include <unordered_map>
 
 //MARK: Started solving love bubber sheet
 using namespace std;
@@ -415,7 +416,7 @@ bool areBracketsBalanced2(string str) {
             } else {
                 return false;
             }
-
+            
         }
     }
     return -1;
@@ -423,10 +424,10 @@ bool areBracketsBalanced2(string str) {
 
 /*
  int main() {
-     string str = "{([])}";
-     areBracketsBalanced2(str);
+ string str = "{([])}";
+ areBracketsBalanced2(str);
  }
-
+ 
  */
 
 
@@ -436,7 +437,7 @@ int binarysearch(int arr[], int n, int k) {
     int high = n - 1;
     while (low <= high) {
         int mid = low + (high - low) / 2;
-
+        
         if(arr[mid] == k) {
             printf("%d ", mid);
             break;
@@ -467,11 +468,11 @@ int RecBinarySearch(int arr[], int start, int end , int key) {
 
 /*
  int main() {
-     int arr[] = {2, 3, 4, 10, 40};
-     int size = sizeof(arr) / sizeof(arr[0]);
-     int key = 10;
-     int result = RecBinarySearch(arr, 0, size - 1, key);
-     printf("%d ", result);
+ int arr[] = {2, 3, 4, 10, 40};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ int key = 10;
+ int result = RecBinarySearch(arr, 0, size - 1, key);
+ printf("%d ", result);
  }
  */
 
@@ -507,7 +508,7 @@ int doUnion(int a[], int n, int b[], int m)  {
 
 vector<int> Unionarray(int arr1[], int arr2[], int n, int m) {
     set<int> res;
-
+    
     for(int i = 0; i < n; i++) {
         res.insert(arr1[i]);
     }
@@ -528,35 +529,133 @@ vector<int> uniounOfArray(int arr1[], int arr2[], int m, int n) {
 
 /*
  int main() {
-     int a[] = {1, 2, 3, 4, 5};
-     int b[] = {1, 2, 3};
-     int m = sizeof(a) / sizeof(a[0]);
-     int n = sizeof(b) / sizeof(b[0]);
-     vector<int> uni = Unionarray(a, b, m, n);
-     for(int i: uni) {
-         cout<< i << " ";
-     }
-     
+ int a[] = {1, 2, 3, 4, 5};
+ int b[] = {1, 2, 3};
+ int m = sizeof(a) / sizeof(a[0]);
+ int n = sizeof(b) / sizeof(b[0]);
+ vector<int> uni = Unionarray(a, b, m, n);
+ for(int i: uni) {
+ cout<< i << " ";
+ }
+ 
  }
  */
 
 
 //MARK: Reverse array in groups
 
+void swaping(int *x, int *y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
 void reveseInGroup(int arr[], int n, int k) {
+    for(int i = 0; i < n; i = i + k) {
+        int left = i;
+        int right = min(i + k - 1, n - 1);
+        while (left < right) {
+            swaping(&arr[left], &arr[right]);
+            left++;
+            right--;
+        }
+    }
+    for(int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    }
+}
+/*
+ int main() {
+ int arr[] = {1,2,3,4,5,6,7,8};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ int k = 3;
+ reveseInGroup(arr, size, k);
+ }
+ 
+ */
+
+
+//MARK: Find triplets with zero sum
+
+bool findTripletWithZeroSum(int arr[], int n) {
+    
+    bool isFound = false;
+    for(int i = 0; i < n - 2; i++) {
+        for(int j = i + 1; j < n -1; j++) {
+            for(int k = j + 1; k < n; k++) {
+                if(arr[i] + arr[j] + arr[k] == 0) {
+                    isFound = true;
+                }
+            }
+        }
+    }
+    if(isFound == true) {
+        return 1;
+    }
+    return false;
+}
+//MARK: Find triplets with zero sum method 2
+
+bool findTripletWithZeroSum2(int arr[], int n) {
+    
+    bool isfound = false;
+    
+    sort(arr, arr + n);
     
     for(int i = 0; i < n; i++) {
+        int left = i + 1;
+        int right = n - 1;
+        int x = arr[i];
         
-        if(i < k) {
-            
+        while (left < right) {
+            if(x + arr[left] + arr[right] == 0) {
+                left++;
+                right--;
+                isfound = true;
+                break;
+            } else if(x + arr[left] + arr[right] < 0) {
+                left++;
+            } else {
+                right--;
+            }
         }
     }
     
+    if(isfound) {
+        return true;
+    }
+    
+    return false;
+    
+}
+
+
+/*
+ int main() {
+ int arr[] = {0, -1, 2, -3, 1};
+ int size = sizeof(arr) / sizeof(arr[0]);
+ findTripletWithZeroSum2(arr, size);
+ }
+ 
+ */
+
+bool check(vector<int> A, vector<int> B, int N) {
+    unordered_map<int, int>map;
+    for(int i = 0; i < N; i++) {
+        map[A[i]]++;
+    }
+    for(int i = 0; i < N; i++) {
+        if(map[B[i]] == 0) {
+            return false;
+        }
+        map[B[i]]--;
+    }
+    return true;
 }
 
 int main() {
-    int arr[] = {1,2,3,4,5};
-    int size = sizeof(arr) / sizeof(arr[0]);
-    int k = 3;
-    reveseInGroup(arr, size, k);
+    vector<int>B = {1,2,5};
+    vector<int>C = {2,4,15};
+    int size = B.size();
+    check(B, C, size);
 }
+
